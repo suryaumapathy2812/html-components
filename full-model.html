@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Colors: */
+            --unnamed-color-ffffff: #FFFFFF;
+
+            /* Font/text values */
+            --unnamed-font-family-open-sans: Open Sans;
+            --unnamed-font-style-light: 300;
+            --unnamed-font-size-20: 20px;
+            --unnamed-font-size-32: 32px;
+            --unnamed-character-spacing-0-24: 0.24px;
+            --unnamed-character-spacing-0-38: 0.38px;
+            --unnamed-line-spacing-31: 31px;
+            --unnamed-line-spacing-58: 58px;
+        }
+
+        /* Character Styles */
+        .open-sans-20 {
+            font-family: var(--unnamed-font-family-open-sans);
+            font-weight: var(--unnamed-font-style-light);
+            font-size: var(--unnamed-font-size-20);
+            line-height: var(--unnamed-line-spacing-31);
+            letter-spacing: var(--unnamed-character-spacing-0-24);
+            color: var(--unnamed-color-ffffff);
+        }
+
+        .open-sans-32 {
+            font-family: var(--unnamed-font-family-open-sans);
+            font-weight: var(--unnamed-font-style-light);
+            font-size: var(--unnamed-font-size-32);
+            line-height: var(--unnamed-line-spacing-58);
+            letter-spacing: var(--unnamed-character-spacing-0-38);
+            color: var(--unnamed-color-ffffff);
+        }
+
+        .modal {
+            /* display: none; */
+            position: absolute;
+            top: 0;
+            padding: 0px 200px;
+            width: 100%;
+            height: 100vh;
+            background-color: #060068;
+            z-index: 10;
+        }
+
+        .modal .container {
+            position: relative;
+        }
+
+        .modal-header {
+            position: absolute;
+            display: block;
+            right: 200px;
+            border: none;
+        }
+
+        .model-body {
+            margin: auto;
+        }
+
+        .close {
+            position: relative;
+            top: 60px;
+            width: 24px;
+            height: 24px;
+            background-color: #060068;
+            border: none;
+            cursor: pointer;
+            z-index: 20;
+            outline: none;
+        }
+
+        .close .line:first-of-type {
+            position: absolute;
+            left: 0;
+            display: inline-block;
+            width: 24px;
+            transform: matrix(-0.71, 0.71, -0.71, -0.71, 0, 0);
+            background-color: #fff;
+            border-radius: 1px;
+
+            border: 1px solid var(--unnamed-color-ffffff);
+            border: 1px solid #FFFFFF;
+            opacity: 1;
+        }
+
+        .close .line:last-of-type {
+            position: absolute;
+            left: 0;
+            display: inline-block;
+            width: 24px;
+            transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+            background-color: #fff;
+            border-radius: 1px;
+            border: 1px solid var(--unnamed-color-ffffff);
+            border: 1px solid #FFFFFF;
+            opacity: 1;
+        }
+
+        .modal-title {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100vh;
+            background: transparent linear-gradient(180deg, #060068 0%, #06006832 47%, #06006800 100%) 0% 0% no-repeat padding-box;
+            opacity: 1;
+            /* z-index: 10; */
+        }
+
+        form {
+            width: 824px;
+            height: 100vh;
+            padding: 344px 0px 0px;
+            margin: auto;
+            display: flex;
+            align-items: stretch;
+            flex-direction: column;
+            overflow: scroll;
+            /* cursor: -moz-grab; */
+            -ms-overflow-style: none;
+            /* Internet Explorer 10+ */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        form::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        form:after {
+            content: "";
+            padding-bottom: 275px;
+        }
+
+        form h4 {
+            width: 80%;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            position: relative;
+            margin: auto;
+            width: 80%;
+            margin-bottom: 50px;
+
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-group input {
+            width: 100%;
+            display: block;
+            border: none;
+            background-color: #060068;
+            border-bottom: solid 1px #FFFFFF;
+            border-radius: 0;
+            padding: 10px 10px 20px 10px;
+            outline: #FFFFFF;
+        }
+
+        .form-group input::-moz-focus-inner {
+            outline: none
+        }
+
+        .btn {
+            width: 80%;
+            margin: auto;
+        }
+
+        .form-group input:focus~.form-datalist {
+            display: block;
+        }
+
+        .form-datalist {
+            display: none;
+            position: absolute;
+            width: 100%;
+            background: #fff;
+            overflow: auto;
+            max-height: 300px;
+            list-style-type: none;
+            z-index: 1;
+            /* cursor: -moz-grab; */
+            -ms-overflow-style: none;
+            /* Internet Explorer 10+ */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .form-datalist::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+
+        .form-datalist li .list {
+            padding: 10px 20px;
+            display: block;
+            color: #060068;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+        .form-submit {
+            margin-left: auto;
+            display: block;
+            width: fit-content;
+            padding: 16px 50px;
+            font-weight: 400;
+            border-radius: 4px;
+            color: #060068;
+            background-color: rgb(255, 255, 255);
+            border: none;
+        }
+
+        .form-submit:disabled {
+            background-color: rgba(255, 255, 255, 0.50);
+        }
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+
+    <button onclick="openModal()">open model</button>
+
+
+    <div class="modal">
+        <div class="container-fluid">
+
+            <div class="modal-header">
+
+                <button class="close" onclick="closeModal()">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="model-content">
+
+                    <form autocomplete="off">
+
+                        <h4 class="open-sans-20">Fill in the details of the company you were searching for.
+                        </h4>
+
+                        <div class="form-group">
+                            <label for="companyName" class="open-sans-32"> What's the name of the Company? </label>
+                            <input class="open-sans-20" type="text" id="companyName" name="companyName"
+                                placeholder="Enter the company name here..." autocomplete="off" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="open-sans-32"> What's the Company's email address?</label>
+                            <input class="open-sans-20" type="text" id="email" name="email"
+                                placeholder="Enter the company's email address..." required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phoneNo" class="open-sans-32"> What's the company's contact number?</label>
+                            <input class="open-sans-20" type="tel" pattern="[0-9]{10}" id="phoneNo" name="phoneNo"
+                                placeholder="Enter the company's contact number..." required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address" class="open-sans-32"> What's the address of the Company? </label>
+                            <input class="open-sans-20" type="text" id="address" name="address"
+                                placeholder="Enter the company's address..." required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="country" class="open-sans-32"> Which Country is the Company based from? </label>
+                            <input class="open-sans-20" type="text" id="country" name="country"
+                                placeholder="Please choose a country form the list..." required>
+
+                            <ul id="countries" class="form-datalist">
+                                <li><a href="#" class="list open-sans-20"> Option 1 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 2 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 3 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 4 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 5 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 6 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 1 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 2 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 3 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 4 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 5 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 6 </a></li>
+                            </ul>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="state" class="open-sans-32"> Which State? </label>
+                            <input class="open-sans-20" type="text" id="state" name="state"
+                                placeholder="Please choose a state form the list..." required>
+                            <ul id="countries" class="form-datalist">
+                                <li><a href="#" class="list open-sans-20"> Option 1 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 2 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 3 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 4 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 5 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 6 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 1 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 2 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 3 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 4 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 5 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 6 </a></li>
+                            </ul>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="city" class="open-sans-32"> Which City? </label>
+                            <input class="open-sans-20" type="text" id="city" name="city"
+                                placeholder="Please choose a city form the list..." required>
+                            <ul id="countries" class="form-datalist">
+                                <li><a href="#" class="list open-sans-20"> Option 1 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 2 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 3 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 4 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 5 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 6 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 1 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 2 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 3 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 4 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 5 </a></li>
+                                <li><a href="#" class="list open-sans-20"> Option 6 </a></li>
+                            </ul>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="zipcode" class="open-sans-32"> And finally, the zipcode</label>
+                            <input class="open-sans-20" type="number" id="zipcode" min="00000" maxlength="6"
+                                name="zipcode" placeholder="Please enter the zipcode here..." required>
+                        </div>
+
+                        <div class="btn">
+                            <button class="form-submit open-sans-20" type="submit"> Submit </button>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.querySelector('.modal');
+
+        function openModal() {
+            modal.style.display = 'block'
+        }
+        function closeModal() {
+            modal.style.display = 'none'
+        }
+
+    </script>
+
+</body>
+
+</html>
